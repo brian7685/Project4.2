@@ -210,6 +210,14 @@ if parameters['special']:
         train_out.writelines([ "%s\n" % " ".join(map(str, ys)) for ys in y_preds])
         train_out.writelines([ "%s\n" % x[1] for x in raw_sentence ])
 
+    dev_out = open("dev.data", "w")
+    for raw_sentence, data in zip(dev_sentences, dev_data):
+        input = create_input(data, parameters, False)
+        y_preds = f_eval(*input)
+        dev_out.write("%d\n" % len(raw_sentence))
+        dev_out.writelines([ "%s\n" % " ".join(map(str, ys)) for ys in y_preds])
+        dev_out.writelines([ "%s\n" % x[1] for x in raw_sentence ])
+
     test_out = open("test.data", "w")
     test_ans = open("test.ans", "w")
     for raw_sentence, data in zip(test_sentences, test_data):
